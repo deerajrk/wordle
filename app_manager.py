@@ -8,7 +8,7 @@ class AppManager(QObject):
         super().__init__()
         print("AppManager initiated")
 
-    def start_gui():
+    def start_gui(self):
         app = QApplication(sys.argv)
         main_window = MainWindow()
         main_window.show()

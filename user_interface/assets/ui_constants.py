@@ -1,2 +1,5 @@
 APP_TITLE = "Wordle | A recreation"
+APP_HEADING = "WORDLE"
 APP_LOGO = "user_interface/assets/images/logo.png"
+EXIT_ICON = "user_interface/assets/images/exit.svg"
+INFO_ICON = "user_interface/assets/images/info.svg"
