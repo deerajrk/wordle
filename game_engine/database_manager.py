@@ -12,3 +12,13 @@ class DatabaseManager:
         rows = self.cursor.execute(query)
         for row in rows:
             return row[0].upper()
+
+    def validate_word(self, word):
+        query = f"SELECT word FROM wordlist WHERE word='{word.upper()}'"
+        rows = self.cursor.execute(query)
+        for rows in rows:
+            print(True)
+        print(False)
+
+    def __del__(self):
+        self.conn.close()
