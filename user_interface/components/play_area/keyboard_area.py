@@ -50,3 +50,4 @@ class Key(QFrame):
         self.setFixedHeight(40)
         self.setMinimumWidth(35)
         self.setStyleSheet("QFrame { background-color: #D3D6DA; }")
+        self.setFrameStyle(QFrame.Panel | QFrame.Raised)
