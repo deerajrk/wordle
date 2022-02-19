@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QAction, QWidget, QVBoxLayout, QFrame
+from PyQt5.QtWidgets import QMainWindow, QAction, QWidget, QVBoxLayout, QFrame, QMessageBox
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 import user_interface.assets.ui_constants as uic
@@ -7,6 +7,7 @@ from user_interface.components.header import Header
 from user_interface.components.play_area.guess_area import GuessArea
 from user_interface.components.play_area.keyboard_area import KeyboardArea
 from user_interface.components.play_area.result_area import ResultArea
+from user_interface.components.howto_play import HowToPlay
 
 
 class MainWindow(QMainWindow):
@@ -31,15 +32,40 @@ class MainWindow(QMainWindow):
         self._set_menu_help()
 
     def _set_menu_game(self):
+        menu_game_new = QAction("&Start new game", self.menu_game)
+        menu_game_new.setIcon(QIcon(uic.NEW_ICON))
+        menu_game_new.triggered.connect(self._start_new_game)
         menu_game_exit = QAction("&Exit", self.menu_game)
+        self.menu_game.addAction(menu_game_new)
         menu_game_exit.setIcon(QIcon(uic.EXIT_ICON))
         menu_game_exit.triggered.connect(sys.exit)
         self.menu_game.addAction(menu_game_exit)
 
     def _set_menu_help(self):
+        menu_help_game = QAction("&How to play", self.menu_help)
+        menu_help_game.setIcon(QIcon(uic.HELP_ICON))
+        menu_help_game.triggered.connect(self._show_howto_play)
+        self.menu_help.addAction(menu_help_game)
         menu_help_about = QAction("&About", self.menu_help)
         menu_help_about.setIcon(QIcon(uic.INFO_ICON))
+        menu_help_about.triggered.connect(self._show_about_message)
         self.menu_help.addAction(menu_help_about)
+
+    def _start_new_game(self):
+        print("Start new game clicked")
+
+    def _show_howto_play(self):
+        howto_play = HowToPlay()
+        howto_play.display()
+
+    def _show_about_message(self):
+        QMessageBox.information(self, "About Wordle | A recreation", """
+        A recreation of the online Wordle game:
+        https://www.nytimes.com/games/wordle/index.html \n
+        Version: 1.0.0
+        2022.02.20
+        Created by: Deeraj Rajkarnikar (deeraj.rk@gmail.com)
+        """)
 
     def _init_window_skeleton(self):
         central_widget = QWidget()
