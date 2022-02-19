@@ -30,5 +30,5 @@ class Header(QWidget):
     @staticmethod
     def _get_title():
         title_label = QLabel(uic.APP_HEADING)
-        title_label.setStyleSheet("QLabel { color:black; font-size: 30px; }")
+        title_label.setStyleSheet("QLabel { color:black; font-size: 40px; }")
         return title_label

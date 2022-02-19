@@ -4,6 +4,10 @@ from PyQt5.QtCore import Qt
 import user_interface.assets.ui_constants as uic
 import sys
 from user_interface.components.header import Header
+from user_interface.components.play_area.guess_area import GuessArea
+from user_interface.components.play_area.keyboard_area import KeyboardArea
+from user_interface.components.play_area.result_area import ResultArea
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -42,6 +46,12 @@ class MainWindow(QMainWindow):
         central_layout = QVBoxLayout()
         central_layout.addWidget(Header())
         central_layout.addWidget(self._get_hline())
+        self.guess_area = GuessArea()
+        self.result_area = ResultArea()
+        self.keyboard_area = KeyboardArea()
+        central_layout.addWidget(self.guess_area)
+        central_layout.addWidget(self.result_area)
+        central_layout.addWidget(self.keyboard_area)
         central_layout.addStretch(1)
         central_widget.setLayout(central_layout)
         self.setCentralWidget(central_widget)
@@ -53,3 +63,4 @@ class MainWindow(QMainWindow):
         h_line.setFrameShape(QFrame.HLine)
         h_line.setFrameShadow(QFrame.Sunken)
         return h_line
+        
