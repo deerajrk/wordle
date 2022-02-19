@@ -1,4 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFrame, QHBoxLayout, QLabel
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtGui import QMouseEvent
 import user_interface.assets.ui_constants as uic 
 
 
@@ -51,3 +53,11 @@ class Key(QFrame):
         self.setMinimumWidth(35)
         self.setStyleSheet("QFrame { background-color: #D3D6DA; }")
         self.setFrameStyle(QFrame.Panel | QFrame.Raised)
+        self.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+
+    def mousePressEvent(self, QMouseEvent):
+        self.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+
+    def mouseReleaseEvent(self, QMouseEvent):
+        self.setFrameStyle(QFrame.Panel | QFrame.Raised)
+        
