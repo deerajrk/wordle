@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QFrame, QGridLayout, QHBoxLayout, QLabel
-from enum import Enum
+from PyQt5.QtCore import pyqtSlot
 
 
 class GuessArea(QWidget):
@@ -9,17 +9,27 @@ class GuessArea(QWidget):
         self._init_guess_area()
 
     def _init_guess_area(self):
-        guess_area_layout = QGridLayout()
+        self.guess_area_layout = QGridLayout()
         positions = [(x, y) for x in range(6) for y in range(5)]
         for position in positions:
-            guess_area_layout.addWidget(GuessTile(*position), *position)
+            self.guess_area_layout.addWidget(GuessTile(*position), *position)
         guess_widget = QWidget()
-        guess_widget.setLayout(guess_area_layout)
+        guess_widget.setLayout(self.guess_area_layout)
         outer_layout = QHBoxLayout()
         outer_layout.addStretch(1)
         outer_layout.addWidget(guess_widget)
         outer_layout.addStretch(1)
         self.setLayout(outer_layout)
+
+    @pyqtSlot(str, int, int)
+    def update_user_input(self, ch, x, y):
+        guess_tile = self.guess_area_layout.itemAt(x + y).widget()
+        guess_tile.update_letter(ch)
+
+    @pyqtSlot(int, int)
+    def update_backspace(self, x, y):
+        guess_tile = self.guess_area_layout.itemAt(x + y).widget()
+        guess_tile.update_letter("")
 
 
 TILE_TYPES = {
@@ -51,14 +61,18 @@ class GuessTile(QFrame):
         self.tile_layout.addStretch(1)
         self.setLayout(self.tile_layout)
 
+    def update_letter(self, letter):
+        self.letter = letter
+        self.title_label.setText(self.letter)
+
     def _get_text(self, text):
-        title_label = QLabel(text)
+        self.title_label = QLabel(text)
         if self.type == 0:
             text_color = "black"
         else:
             text_color = "white"
-        title_label.setStyleSheet("QLabel { color:black; font-size: 14px;  color: " + text_color + "; }")
-        return title_label
+        self.title_label.setStyleSheet("QLabel { color:black; font-size: 14px;  color: " + text_color + "; }")
+        return self.title_label
 
     def setTileColor(self):
         self.setFrameStyle(QFrame.Box | QFrame.Plain)
