@@ -39,6 +39,14 @@ class GuessArea(QWidget):
             tile.type = info["typ"]
             tile.update_frame_style()
 
+    @pyqtSlot()
+    def clear_guess_area(self):
+        tiles = (self.guess_area_layout.itemAt(i).widget() for i in range(self.guess_area_layout.count())) 
+        for tile in tiles:
+            tile.update_letter("")
+            tile.type = TILE_TYPES["EMPTY"]
+            tile.update_frame_style()
+
 
 TILE_TYPES = {
     "EMPTY": 0,
@@ -76,12 +84,16 @@ class GuessTile(QFrame):
     def update_frame_style(self):
         if self.type == 0:
             self.setStyleSheet("QFrame { background-color: white; }")
+            self.title_label.setStyleSheet("QLabel { color: black; }")
         elif self.type == 1:
             self.setStyleSheet("QFrame { background-color: #787C7E; }")
+            self.title_label.setStyleSheet("QLabel { color: white; }")
         elif self.type == 2:
             self.setStyleSheet("QFrame { background-color: #C9B458; }")
+            self.title_label.setStyleSheet("QLabel { color: white; }")
         elif self.type == 3:
             self.setStyleSheet("QFrame { background-color: #6AAA64; }")
+            self.title_label.setStyleSheet("QLabel { color: white; }")
 
     def _get_text(self, text):
         self.title_label = QLabel(text)

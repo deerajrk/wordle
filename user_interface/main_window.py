@@ -13,6 +13,7 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot
 
 class MainWindow(QMainWindow):
     emit_single_key = pyqtSignal(str)
+    start_new_game = pyqtSignal()
 
     def __init__(self, am):
         super().__init__()
@@ -59,7 +60,7 @@ class MainWindow(QMainWindow):
         self.menu_help.addAction(menu_help_about)
 
     def _start_new_game(self):
-        print("Start new game clicked")
+        self.start_new_game.emit()
 
     def _show_howto_play(self):
         howto_play = HowToPlay()
