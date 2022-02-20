@@ -28,7 +28,6 @@ class GameManager(QThread):
 
     def start_new_game(self, init_run = False):
         self.current_word = self.dbm.get_random_word()
-        print(self.current_word)
         self.current_guessword = ""
         self.guess_x = 0
         self.guess_y = 0

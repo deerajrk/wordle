@@ -7,7 +7,6 @@ from game_engine.game_manager import GameManager
 class AppManager(QObject):
     def __init__(self):
         super().__init__()
-        print("AppManager initiated")
 
     def start_app(self):
         app = QApplication(sys.argv)
