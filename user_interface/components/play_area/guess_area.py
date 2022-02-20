@@ -3,8 +3,9 @@ from enum import Enum
 
 
 class GuessArea(QWidget):
-    def __init__(self):
+    def __init__(self, mw):
         super().__init__()
+        self.mw = mw
         self._init_guess_area()
 
     def _init_guess_area(self):

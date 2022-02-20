@@ -8,4 +8,6 @@ HELP_ICON = "user_interface/assets/images/help.png"
 
 KEYBOARD_FIRST_ROW = ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P"]
 KEYBOARD_SECOND_ROW = ["A", "S", "D", "F", "G", "H", "J", "K", "L"]
-KEYBOARD_THIRD_ROW = ["ENTER", "Y", "X", "C", "V", "B", "N", "N", "M", "DEL"]
+KEYBOARD_THIRD_ROW = ["ENTER", "Y", "X", "C", "V", "B", "N", "N", "M", "BACKSPACE"]
+
+KEYS_OF_INTEREST = KEYBOARD_FIRST_ROW + KEYBOARD_SECOND_ROW + KEYBOARD_THIRD_ROW

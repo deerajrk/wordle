@@ -8,13 +8,20 @@ from user_interface.components.play_area.guess_area import GuessArea
 from user_interface.components.play_area.keyboard_area import KeyboardArea
 from user_interface.components.play_area.result_area import ResultArea
 from user_interface.components.howto_play import HowToPlay
+from PyQt5.QtCore import pyqtSignal, pyqtSlot
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    emit_single_key = pyqtSignal(str)
+
+    def __init__(self, am):
         super().__init__()
+        self.am = am
         self._init_main_window()
         self._init_window_skeleton()
+
+    def emit_key(self, key):
+        self.emit_single_key.emit(key)
 
     def _init_main_window(self):
         self.setWindowTitle(uic.APP_TITLE)
@@ -72,9 +79,9 @@ class MainWindow(QMainWindow):
         central_layout = QVBoxLayout()
         central_layout.addWidget(Header())
         central_layout.addWidget(self._get_hline())
-        self.guess_area = GuessArea()
-        self.result_area = ResultArea()
-        self.keyboard_area = KeyboardArea()
+        self.guess_area = GuessArea(self)
+        self.result_area = ResultArea(self)
+        self.keyboard_area = KeyboardArea(self)
         central_layout.addWidget(self.guess_area)
         central_layout.addWidget(self.result_area)
         central_layout.addWidget(self.keyboard_area)

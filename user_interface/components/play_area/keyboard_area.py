@@ -1,12 +1,13 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFrame, QHBoxLayout, QLabel
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import QMouseEvent
-import user_interface.assets.ui_constants as uic 
+import user_interface.assets.ui_constants as uic
 
 
 class KeyboardArea(QWidget):
-    def __init__(self):
+    def __init__(self, mw):
         super().__init__()
+        self.mw = mw
         self._init_keyboard_area()
 
     def _init_keyboard_area(self):
@@ -27,7 +28,7 @@ class KeyboardArea(QWidget):
         row_layout = QHBoxLayout()
         row_layout.addStretch(1)
         for key in key_list:
-            single_key = Key(key)
+            single_key = Key(self.mw, key)
             row_layout.addWidget(single_key)
         row_layout.addStretch(1)
         row.setLayout(row_layout)
@@ -35,8 +36,9 @@ class KeyboardArea(QWidget):
 
 
 class Key(QFrame):
-    def __init__(self, value, type = None):
+    def __init__(self, mw, value, type = None):
         super().__init__()
+        self.mw = mw
         self.value = value
         self.type = type
         self._init_key()
@@ -57,6 +59,7 @@ class Key(QFrame):
 
     def mousePressEvent(self, QMouseEvent):
         self.setFrameStyle(QFrame.Panel | QFrame.Sunken)
+        self.mw.emit_key(self.value)
 
     def mouseReleaseEvent(self, QMouseEvent):
         self.setFrameStyle(QFrame.Panel | QFrame.Raised)
