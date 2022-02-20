@@ -17,8 +17,8 @@ class DatabaseManager:
         query = f"SELECT word FROM wordlist WHERE word='{word.upper()}'"
         rows = self.cursor.execute(query)
         for rows in rows:
-            print(True)
-        print(False)
+            return True
+        return False
 
     def __del__(self):
         self.conn.close()

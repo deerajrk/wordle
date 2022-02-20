@@ -25,3 +25,4 @@ class AppManager(QObject):
         self.main_window.emit_single_key.connect(self.game_manager.register_single_key)
         self.game_manager.update_user_input.connect(self.main_window.guess_area.update_user_input)
         self.game_manager.update_backspace.connect(self.main_window.guess_area.update_backspace)
+        self.game_manager.update_guess_word.connect(self.main_window.guess_area.update_guess_word)

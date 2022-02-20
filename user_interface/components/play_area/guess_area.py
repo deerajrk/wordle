@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QFrame, QGridLayout, QHBoxLayout, QLabel
 from PyQt5.QtCore import pyqtSlot
+from time import sleep
 
 
 class GuessArea(QWidget):
@@ -23,13 +24,20 @@ class GuessArea(QWidget):
 
     @pyqtSlot(str, int, int)
     def update_user_input(self, ch, x, y):
-        guess_tile = self.guess_area_layout.itemAt(x + y).widget()
+        guess_tile = self.guess_area_layout.itemAt(x + y * 5).widget()
         guess_tile.update_letter(ch)
 
     @pyqtSlot(int, int)
     def update_backspace(self, x, y):
-        guess_tile = self.guess_area_layout.itemAt(x + y).widget()
+        guess_tile = self.guess_area_layout.itemAt(x + y * 5).widget()
         guess_tile.update_letter("")
+
+    @pyqtSlot(list, int)
+    def update_guess_word(self, word_info, y):
+        for info in word_info:
+            tile = self.guess_area_layout.itemAt(y * 5 + info["x"]).widget()
+            tile.type = info["typ"]
+            tile.update_frame_style()
 
 
 TILE_TYPES = {
@@ -65,6 +73,16 @@ class GuessTile(QFrame):
         self.letter = letter
         self.title_label.setText(self.letter)
 
+    def update_frame_style(self):
+        if self.type == 0:
+            self.setStyleSheet("QFrame { background-color: white; }")
+        elif self.type == 1:
+            self.setStyleSheet("QFrame { background-color: #787C7E; }")
+        elif self.type == 2:
+            self.setStyleSheet("QFrame { background-color: #C9B458; }")
+        elif self.type == 3:
+            self.setStyleSheet("QFrame { background-color: #6AAA64; }")
+
     def _get_text(self, text):
         self.title_label = QLabel(text)
         if self.type == 0:
@@ -76,12 +94,4 @@ class GuessTile(QFrame):
 
     def setTileColor(self):
         self.setFrameStyle(QFrame.Box | QFrame.Plain)
-        
-        if self.type == 0:
-            self.setStyleSheet("QFrame { background-color: white; }")
-        elif self.type == 1:
-            self.setStyleSheet("QFrame { background-color: #787C7E; }")
-        elif self.type == 2:
-            self.setStyleSheet("QFrame { background-color: #C9B458; }")
-        elif self.type == 3:
-            self.setStyleSheet("QFrame { background-color: #6AAA64; }")
+        self.update_frame_style()
