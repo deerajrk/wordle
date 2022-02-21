@@ -6,7 +6,7 @@ Python 3.9 or newer - https://www.python.org/downloads/
 
 How to get the game started?
 
-- Make sure Python is installed in your PC
+- Make sure Python is installed
 - Clone the repository on to your local drive
 - Open command prompt / terminal
 - Navigate to to location of cloned repositry folder
